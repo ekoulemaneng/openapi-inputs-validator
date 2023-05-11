@@ -57,22 +57,7 @@ export interface SingleSchema extends Partial<JSONSchema> {
     additionalProperties: false
 }
 
-/*
-export type RequestSchema = {
-    type: 'object'
-    oneOf: Array<SingleSchema>
-}
-*/
-
 export type RequestSchemas = Array<{ contentType: string | null, schema: SingleSchema }>
-
-/*
-export type GeneratedSchema = { 
-    path: string 
-    operation: HttpMethod 
-    schema: RequestSchema 
-}
-*/
 
 export type GeneratedSchema = { 
     path: string 
