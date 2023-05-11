@@ -16,7 +16,7 @@ yarn add openapi-io-validator
 ### Input request validation
 
 ```typescript
-import { compile, validateRequest } from 'openapi-io-validator'
+import { compile, validateRequest, validateResponse } from 'openapi-io-validator'
 
 async function main() {
 
