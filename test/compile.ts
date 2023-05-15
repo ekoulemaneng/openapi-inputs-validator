@@ -7,7 +7,7 @@ context('Compile', () => {
     describe('returns an error', () => {
         it('when schema not provided', async () => {
             // Setup
-            const expected = new Error
+            const expected = new Error('schema is not provided')
             // Exercise and verify
             await assert.rejects(async () => await compile(), expected)
         })

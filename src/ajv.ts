@@ -1,7 +1,7 @@
 import Ajv, { Format, KeywordDefinition } from 'ajv'
 import addFormats from "ajv-formats"
 
-export const ajv = new Ajv({ useDefaults: true, coerceTypes: true, allErrors: true, strict: true })
+export const ajv = new Ajv({ useDefaults: true, coerceTypes: true, allErrors: true, strict: false })
 
 addFormats(ajv)
 

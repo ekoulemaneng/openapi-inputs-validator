@@ -217,13 +217,20 @@ const setOperationSchema: SetOperationSchema = (schema, path, method) => {
     }
     else {
         requestBody.content.forEach(content => {
-            const _jsonSchema = JSON.parse(JSON.stringify(jsonSchema))
+            let _jsonSchema = JSON.parse(JSON.stringify(jsonSchema))
             _jsonSchema.properties['headers'].properties['Content-Type'] = { type: 'string', pattern: `^${content['Content-Type']}$` }
-            if (!_jsonSchema.properties['headers'].required.includes('Content-Type') && requestBody.required) _jsonSchema.properties['headers'].required.push('Content-Type')
             _jsonSchema.properties['body'] = content.schema
-            if (requestBody.required) _jsonSchema.required.push('body')
-            if (!_jsonSchema.required.includes('headers')) _jsonSchema.required.push('headers')
-            requestSchemas.push({ contentType: content['Content-Type'], schema: _jsonSchema })
+            if (!requestBody.required) {
+                requestSchemas.push({ contentType: content['Content-Type'], schema: _jsonSchema })
+                _jsonSchema = JSON.parse(JSON.stringify(jsonSchema))
+                requestSchemas.push({ contentType: null, schema: _jsonSchema })
+            }
+            else {
+                if (!_jsonSchema.properties['headers'].required.includes('Content-Type')) _jsonSchema.properties['headers'].required.push('Content-Type')
+                if (!_jsonSchema.required.includes('headers')) _jsonSchema.required.push('headers')
+                _jsonSchema.required.push('body')
+                requestSchemas.push({ contentType: content['Content-Type'], schema: _jsonSchema })
+            }
         })
         return requestSchemas
     }
